@@ -1,0 +1,114 @@
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local TweenService = game:GetService("TweenService")
+local UserInputService = game:GetService("UserInputService")
+local HttpService = game:GetService("HttpService")
+
+local player = Players.LocalPlayer
+local playerGui = player:FindFirstChild("PlayerGui")
+if not playerGui then
+    playerGui = Instance.new("ScreenGui")
+    playerGui.Name = "AriseCrossoverGUI"
+    playerGui.Parent = player
+end
+
+-- Function to get HWID (simulated for security purposes)
+local function getHWID()
+    return game:GetService("HttpService"):GenerateGUID(false) -- Replace with actual HWID method
+end
+
+local hwid = getHWID()
+
+-- Placeholder for valid keys (in real implementation, fetch from a secure server)
+local validKeys = {
+    ["SAMPLE-KEY-123"] = true,
+    ["TEST-KEY-456"] = true
+}
+
+-- Create GUI frame
+local guiFrame = Instance.new("Frame")
+guiFrame.Size = UDim2.new(0.3, 0, 0.4, 0)
+guiFrame.Position = UDim2.new(0.35, 0, 0.3, 0)
+guiFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+guiFrame.BorderSizePixel = 2
+guiFrame.Visible = false -- Initially hidden until key is verified
+guiFrame.Parent = playerGui
+
+-- Key input frame
+local keyFrame = Instance.new("Frame")
+keyFrame.Size = UDim2.new(0.3, 0, 0.2, 0)
+keyFrame.Position = UDim2.new(0.35, 0, 0.4, 0)
+keyFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+keyFrame.BorderSizePixel = 2
+keyFrame.Parent = playerGui
+
+local keyBox = Instance.new("TextBox")
+keyBox.Size = UDim2.new(0.8, 0, 0.4, 0)
+keyBox.Position = UDim2.new(0.1, 0, 0.3, 0)
+keyBox.PlaceholderText = "Enter Key"
+keyBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+keyBox.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+keyBox.Parent = keyFrame
+
+local submitButton = Instance.new("TextButton")
+submitButton.Size = UDim2.new(0.8, 0, 0.4, 0)
+submitButton.Position = UDim2.new(0.1, 0, 0.7, 0)
+submitButton.Text = "Submit Key"
+submitButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+submitButton.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+submitButton.Parent = keyFrame
+
+-- Key verification function
+submitButton.MouseButton1Click:Connect(function()
+    local enteredKey = keyBox.Text
+    if validKeys[enteredKey] then
+        print("Key accepted. Access granted.")
+        keyFrame.Visible = false
+        guiFrame.Visible = true
+    else
+        print("Invalid key! Access denied.")
+    end
+end)
+
+-- Add title
+local titleLabel = Instance.new("TextLabel")
+titleLabel.Size = UDim2.new(1, 0, 0.1, 0)
+titleLabel.Position = UDim2.new(0, 0, 0, 0)
+titleLabel.Text = "Arise Crossover GUI"
+titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+titleLabel.BackgroundTransparency = 1
+titleLabel.Parent = guiFrame
+
+-- Create Auto Dungeon button
+local autoDungeonButton = Instance.new("TextButton")
+autoDungeonButton.Size = UDim2.new(0.8, 0, 0.15, 0)
+autoDungeonButton.Position = UDim2.new(0.1, 0, 0.2, 0)
+autoDungeonButton.Text = "Auto Dungeon"
+autoDungeonButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+autoDungeonButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+autoDungeonButton.Parent = guiFrame
+
+-- Create Auto Raid button
+local autoRaidButton = Instance.new("TextButton")
+autoRaidButton.Size = UDim2.new(0.8, 0, 0.15, 0)
+autoRaidButton.Position = UDim2.new(0.1, 0, 0.4, 0)
+autoRaidButton.Text = "Auto Raid"
+autoRaidButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+autoRaidButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+autoRaidButton.Parent = guiFrame
+
+-- Placeholder function for Auto Dungeon
+autoDungeonButton.MouseButton1Click:Connect(function()
+    print("Auto Dungeon activated")
+    -- Add dungeon detection and automation here
+end)
+
+-- Placeholder function for Auto Raid
+autoRaidButton.MouseButton1Click:Connect(function()
+    print("Auto Raid activated")
+    -- Add raid targeting logic here
+end)
+
+-- Loadstring Execution
+if _G.AriseCrossoverLoaded then return end
+_G.AriseCrossoverLoaded = true
